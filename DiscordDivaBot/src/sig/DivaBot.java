@@ -24,6 +24,8 @@ public class DivaBot extends ListenerAdapter{
 	public static String token;
 	public static JDA bot;
 	public static HashMap<Long,Message> messageHistory = new HashMap<>();
+	public int lastMessageCount = 0;
+	public String lastMessage = "";
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
 		String[] fileContents = FileUtils.readFromFile("clientToken.txt");
@@ -44,6 +46,19 @@ public class DivaBot extends ListenerAdapter{
 		System.out.println(ev.getChannel().getName());*/
 		
 		//System.out.println(ev.getAuthor().getIdLong());
+		
+		if (ApprovedChannel(ev.getChannel(),ev.getAuthor())&&ev.getMessage().getContentDisplay().toLowerCase().contains("muni")) {
+			if (lastMessageCount>0&&ev.getMessage().getContentDisplay().toLowerCase().equalsIgnoreCase(lastMessage)) {
+				lastMessageCount++;
+			} else {
+				lastMessageCount=1;
+				lastMessage=ev.getMessage().getContentDisplay();
+			}
+			if (lastMessageCount==2) {
+				ev.getChannel().sendMessage(ev.getMessage().getContentDisplay())
+				.queue();
+			}
+		}
 		
 		if (ValidMessage(ev.getAuthor(),ev.getChannel(),ev.getMessage().getContentDisplay())) {
 			/*ev.getChannel().sendMessage(ev.getAuthor().getName()+" typed '"+ev.getMessage().getContentDisplay()+"'!")
@@ -79,12 +94,16 @@ public class DivaBot extends ListenerAdapter{
 	
 	public boolean ValidMessage(User author,MessageChannel channel,String message) {
 		return (author==null||author.getIdLong()!=809417111859888168l)
-				&&(channel.getName().equalsIgnoreCase("bot-tests")||
-						channel.getIdLong()==772923108997857291l/*D4DJcord tiering channel*/||
-						channel.getName().equalsIgnoreCase(author.getName()))
+				&&(ApprovedChannel(channel,author))
 				&&(ContainsMoreThanJustEmote(message) && (message.toLowerCase().contains("muni")||
 						message.toLowerCase().contains("むに")||
 						message.toLowerCase().contains("무니")));
+	}
+
+	private boolean ApprovedChannel(MessageChannel channel,User author) {
+		return channel.getName().equalsIgnoreCase("bot-tests")||
+				channel.getIdLong()==772923108997857291l/*D4DJcord tiering channel*/||
+				channel.getName().equalsIgnoreCase(author.getName());
 	}
 
 	private boolean ContainsMoreThanJustEmote(String message) {
