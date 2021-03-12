@@ -64,7 +64,7 @@ public class DivaBot extends ListenerAdapter{
 			/*ev.getChannel().sendMessage(ev.getAuthor().getName()+" typed '"+ev.getMessage().getContentDisplay()+"'!")
 			.queue();*/
 			//System.out.println(bot.getEmotes());
-			ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().getBytes().length+
+			ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().getBytes().hashCode()+
 					ev.getAuthor().getIdLong()))
 			.queue();
 			//messageHistory.put(ev.getMessageIdLong(),ev.getMessage());
@@ -79,7 +79,7 @@ public class DivaBot extends ListenerAdapter{
 				muniEmotes.add(e);
 			}
 		}
-		Random r = new Random();
+		Random r = new Random(seed);
 		return muniEmotes.get((int)(r.nextDouble()*muniEmotes.size()));
 	}
 
