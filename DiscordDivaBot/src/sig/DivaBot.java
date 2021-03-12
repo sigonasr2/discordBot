@@ -3,6 +3,7 @@ package sig;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.security.auth.login.LoginException;
 
@@ -48,13 +49,14 @@ public class DivaBot extends ListenerAdapter{
 			/*ev.getChannel().sendMessage(ev.getAuthor().getName()+" typed '"+ev.getMessage().getContentDisplay()+"'!")
 			.queue();*/
 			//System.out.println(bot.getEmotes());
-			ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote())
+			ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().getBytes().length+
+					ev.getAuthor().getIdLong()))
 			.queue();
 			//messageHistory.put(ev.getMessageIdLong(),ev.getMessage());
 		}
 	}
 	
-	private Emote ChooseRandomMuniEmote() {
+	private Emote ChooseRandomMuniEmote(long seed) {
 		List<Emote> emotes = bot.getEmotes();
 		List<Emote> muniEmotes = new ArrayList<Emote>();
 		for (Emote e : emotes) {
@@ -62,6 +64,7 @@ public class DivaBot extends ListenerAdapter{
 				muniEmotes.add(e);
 			}
 		}
+		Random r = new Random();
 		return muniEmotes.get((int)(Math.random()*muniEmotes.size()));
 	}
 
@@ -79,7 +82,21 @@ public class DivaBot extends ListenerAdapter{
 				&&(channel.getName().equalsIgnoreCase("bot-tests")||
 						channel.getIdLong()==772923108997857291l/*D4DJcord tiering channel*/||
 						channel.getName().equalsIgnoreCase(author.getName()))
-				&&(message.toLowerCase().contains("muni")||
-						message.toLowerCase().contains("むに"));
+				&&(ContainsMoreThanJustEmote(message) && (message.toLowerCase().contains("muni")||
+						message.toLowerCase().contains("むに")||
+						message.toLowerCase().contains("무니")));
+	}
+
+	private boolean ContainsMoreThanJustEmote(String message) {
+		int colonCount=0;
+		for (int i=0;i<message.length();i++) {
+			if (colonCount>=2&&message.charAt(i)!=':') {
+				return true;
+			}
+			if (message.charAt(i)==':') {
+				colonCount++;
+			}
+		}
+		return colonCount!=2;
 	}
 }
