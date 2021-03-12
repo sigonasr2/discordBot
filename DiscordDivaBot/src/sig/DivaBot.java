@@ -90,7 +90,7 @@ public class DivaBot extends ListenerAdapter{
 	private boolean ContainsMoreThanJustEmote(String message) {
 		int colonCount=0;
 		for (int i=0;i<message.length();i++) {
-			if (colonCount>=2&&message.charAt(i)!=':') {
+			if ((colonCount==0||colonCount>=2)&&message.charAt(i)!=':') {
 				return true;
 			}
 			if (message.charAt(i)==':') {
