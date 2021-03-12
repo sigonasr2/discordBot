@@ -80,7 +80,7 @@ public class DivaBot extends ListenerAdapter{
 			}
 		}
 		Random r = new Random();
-		return muniEmotes.get((int)(Math.random()*muniEmotes.size()));
+		return muniEmotes.get((int)(r.nextDouble()*muniEmotes.size()));
 	}
 
 	/*@Override
