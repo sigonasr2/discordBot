@@ -47,7 +47,7 @@ public class DivaBot extends ListenerAdapter{
 		
 		//System.out.println(ev.getAuthor().getIdLong());
 		
-		if (ApprovedChannel(ev.getChannel(),ev.getAuthor())&&ev.getMessage().getContentDisplay().toLowerCase().contains("muni")) {
+		if (ApprovedChannel(ev.getChannel(),ev.getAuthor())/*&&ev.getMessage().getContentDisplay().toLowerCase().contains("muni")*/) {
 			if (lastMessageCount>0&&ev.getMessage().getContentDisplay().toLowerCase().equalsIgnoreCase(lastMessage)) {
 				lastMessageCount++;
 			} else {
