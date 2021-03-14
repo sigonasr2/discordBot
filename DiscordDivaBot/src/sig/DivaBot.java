@@ -26,6 +26,9 @@ public class DivaBot extends ListenerAdapter{
 	public static HashMap<Long,Message> messageHistory = new HashMap<>();
 	public int lastMessageCount = 0;
 	public String lastMessage = "";
+	public String[] keywordsList= new String[]{
+			"Apple","Apricot","Avocado","Banana","Bilberry","Blackberry","Blueberry","Currant","Cherry","Cherimoya","Clementine","Date","Damson","Fruit","Durian","Eggplant","Elderberry","Feijoa","Gooseberry","Grape","Grapefruit","Guava","Huckleberry","Jackfruit","Jambul","Kiwi","Kumquat","Legume","Lemon","Lime","Lychee","Mango","Mangostine","Melon","Cantaloupe","Cantalope","Honeydew","Watermelon","Rock","Nectarine","Orange","Peach","Pear","Williams","Bartlett","Pitaya","Physalis","Plum","prune","Pineapple","Pomegranate","Pomegranite","Raisin","Raspberry","blackcap","Rambutan","Redcurrant","Salal","Satsuma","Star","Strawberry","Tangerine","Tomato","Ugli","Watermelon","Ziziphus","mauritiana","Red","Orange","Yellow","Green","Blue","Purple","Pink","Brown","Gray","Grey","Black","White","Color","Dragon","Wyvern","Quetzalcoatl","Hydra","Cockatrice","Wyrm","Drake"
+		};
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
 		String[] fileContents = FileUtils.readFromFile("clientToken.txt");
@@ -75,7 +78,9 @@ public class DivaBot extends ListenerAdapter{
 		List<Emote> emotes = bot.getEmotes();
 		List<Emote> muniEmotes = new ArrayList<Emote>();
 		for (Emote e : emotes) {
-			if (e.getName().toLowerCase().contains("muni")) {
+			if (e.getName().toLowerCase().contains("saki")&&
+					!e.getName().toLowerCase().contains("dead1")&&
+					!e.getName().toLowerCase().contains("dead2")) {
 				muniEmotes.add(e);
 			}
 		}
@@ -93,15 +98,19 @@ public class DivaBot extends ListenerAdapter{
 	}*/
 	
 	public boolean ValidMessage(User author,MessageChannel channel,String message) {
-		return (author==null||author.getIdLong()!=809417111859888168l)
+		return (author==null||author.getIdLong()!=809417111859888168l||author.getIdLong()!=820742054002294784l)
 				&&(ApprovedChannel(channel,author))
 				&&(ContainsMoreThanJustEmote(message) && (
-						((message.toLowerCase().contains("motto")||message.toLowerCase().contains("moto"))&&(message.toLowerCase().contains("choudai")||message.toLowerCase().contains("chodai")
-								||message.toLowerCase().contains("chodi")))||
-						(message.toLowerCase().contains("muni")&&message.toLowerCase().contains("awesome"))||
-						message.toLowerCase().contains("muni")||
-						message.toLowerCase().contains("むに")||
-						message.toLowerCase().contains("무니")));
+						containsKeyword(message)));
+	}
+
+	private boolean containsKeyword(String message) {
+		for (String s : keywordsList) {
+			if (message.toLowerCase().contains(s.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean ApprovedChannel(MessageChannel channel,User author) {
