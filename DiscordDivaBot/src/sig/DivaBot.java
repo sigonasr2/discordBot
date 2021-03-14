@@ -93,7 +93,7 @@ public class DivaBot extends ListenerAdapter{
 	}*/
 	
 	public boolean ValidMessage(User author,MessageChannel channel,String message) {
-		return (author==null||author.getIdLong()!=809417111859888168l)
+		return (author==null||author.getIdLong()!=809417111859888168l||author.getIdLong()!=820742054002294784l)
 				&&(ApprovedChannel(channel,author))
 				&&(ContainsMoreThanJustEmote(message) && (
 						((message.toLowerCase().contains("motto")||message.toLowerCase().contains("moto"))&&(message.toLowerCase().contains("choudai")||message.toLowerCase().contains("chodai")
