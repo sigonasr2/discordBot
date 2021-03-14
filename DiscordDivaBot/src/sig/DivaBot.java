@@ -72,7 +72,7 @@ public class DivaBot extends ListenerAdapter{
 			}
 		}*/
 		
-		if (ev.getChannel().getIdLong()==772923108997857291l) {
+		if (ev.getChannel().getIdLong()==772923108997857291l||ev.getChannel().getIdLong()==744692511703826462l) {
 			if (sakiCheck.dead) {
 				//React to next message.
 				sakiCheck.dead=false;
@@ -83,6 +83,7 @@ public class DivaBot extends ListenerAdapter{
 		}
 		
 		if (ValidMessage(ev.getAuthor(),ev.getChannel(),ev.getMessage().getContentDisplay())) {
+			sakiCheck.dead=false;
 			React(ev);
 		}
 	}
