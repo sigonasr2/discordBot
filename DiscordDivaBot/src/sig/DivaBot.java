@@ -1,9 +1,13 @@
 package sig;
 
 import java.util.ArrayList;
+	
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.security.auth.login.LoginException;
 
@@ -29,6 +33,8 @@ public class DivaBot extends ListenerAdapter{
 	public String[] keywordsList= new String[]{
 			"Apple","Apricot","Avocado","Banana","Bilberry","Blackberry","Blueberry","Currant","Cherry","Cherimoya","Clementine","Date","Damson","Fruit","Durian","Eggplant","Elderberry","Feijoa","Gooseberry","Grape","Grapefruit","Guava","Huckleberry","Jackfruit","Jambul","Kiwi","Kumquat","Legume","Lemon","Lime","Lychee","Mango","Mangostine","Melon","Cantaloupe","Cantalope","Honeydew","Watermelon","Rock","Nectarine","Orange","Peach","Pear","Williams","Bartlett","Pitaya","Physalis","Plum","prune","Pineapple","Pomegranate","Pomegranite","Raisin","Raspberry","blackcap","Rambutan","Redcurrant","Salal","Satsuma","Star","Strawberry","Tangerine","Tomato","Ugli","Watermelon","Ziziphus","mauritiana","Red","Orange","Yellow","Green","Blue","Purple","Pink","Brown","Gray","Grey","Black","White","Color","Dragon","Wyvern","Quetzalcoatl","Hydra","Cockatrice","Wyrm","Drake"
 		};
+	static Timer t;
+	static Check sakiCheck;
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
 		String[] fileContents = FileUtils.readFromFile("clientToken.txt");
@@ -38,6 +44,9 @@ public class DivaBot extends ListenerAdapter{
 		bot.addEventListener(new DivaBot());
 		bot.awaitReady();
 		DivaBot.bot=bot;
+		t = new Timer(true);
+		sakiCheck = new Check(bot);
+		t.scheduleAtFixedRate(sakiCheck, 10000, 10000);
 	}
 	
 	//https://ci.dv8tion.net/job/JDA/javadoc/net/dv8tion/jda/api/hooks/ListenerAdapter.html
@@ -50,7 +59,7 @@ public class DivaBot extends ListenerAdapter{
 		
 		//System.out.println(ev.getAuthor().getIdLong());
 		
-		if (ApprovedChannel(ev.getChannel(),ev.getAuthor())/*&&ev.getMessage().getContentDisplay().toLowerCase().contains("muni")*/) {
+		/*if (ApprovedChannel(ev.getChannel(),ev.getAuthor())) {
 			if (lastMessageCount>0&&ev.getMessage().getContentDisplay().toLowerCase().equalsIgnoreCase(lastMessage)) {
 				lastMessageCount++;
 			} else {
@@ -61,17 +70,27 @@ public class DivaBot extends ListenerAdapter{
 				ev.getChannel().sendMessage(ev.getMessage())
 				.queue();
 			}
+		}*/
+		
+		if (ev.getChannel().getIdLong()==772923108997857291l) {
+			if (sakiCheck.dead) {
+				//React to next message.
+				sakiCheck.dead=false;
+				React(ev);
+			} else {
+				sakiCheck.lastChannelMessage=System.currentTimeMillis();
+			}
 		}
 		
 		if (ValidMessage(ev.getAuthor(),ev.getChannel(),ev.getMessage().getContentDisplay())) {
-			/*ev.getChannel().sendMessage(ev.getAuthor().getName()+" typed '"+ev.getMessage().getContentDisplay()+"'!")
-			.queue();*/
-			//System.out.println(bot.getEmotes());
-			ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().hashCode()+
-					ev.getAuthor().getIdLong()))
-			.queue();
-			//messageHistory.put(ev.getMessageIdLong(),ev.getMessage());
+			React(ev);
 		}
+	}
+
+	private void React(MessageReceivedEvent ev) {
+		ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().hashCode()+
+				ev.getAuthor().getIdLong()))
+		.queue();
 	}
 	
 	private Emote ChooseRandomMuniEmote(long seed) {
