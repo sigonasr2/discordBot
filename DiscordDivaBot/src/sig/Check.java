@@ -15,10 +15,12 @@ public class Check extends TimerTask{
 
 	@Override
 	public void run() {
-		if (!dead&&System.currentTimeMillis()-lastChannelMessage>=10000) {
+		if (!dead&&System.currentTimeMillis()-lastChannelMessage>=10800000) {
 			dead=true;
-			bot.getTextChannelById(744692511703826462l).sendMessage("<:sakiDead1:799650259487293440><:sakiDead2:799650259746947083>")
+			bot.getTextChannelById(772923108997857291l).sendMessage("<:sakiPls:820748397031718923><:sakiPls:820748397031718923>")
 			.queue();
+			/*bot.getTextChannelById(744692511703826462l).sendMessage("<:sakiPls:820748397031718923><:sakiPls:820748397031718923>")
+			.queue();*/
 		}
 	}
 	

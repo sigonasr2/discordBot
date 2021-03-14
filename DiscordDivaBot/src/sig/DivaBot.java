@@ -72,7 +72,8 @@ public class DivaBot extends ListenerAdapter{
 			}
 		}*/
 		
-		if (ev.getChannel().getIdLong()==772923108997857291l||ev.getChannel().getIdLong()==744692511703826462l) {
+		if ((ev.getChannel().getIdLong()==772923108997857291l/*||ev.getChannel().getIdLong()==744692511703826462l*/)
+				&&ev.getAuthor().getIdLong()!=809417111859888168l&&ev.getAuthor().getIdLong()!=820742054002294784l) {
 			if (sakiCheck.dead) {
 				//React to next message.
 				sakiCheck.dead=false;
