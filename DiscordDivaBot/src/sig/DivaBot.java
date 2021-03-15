@@ -81,6 +81,8 @@ public class DivaBot extends ListenerAdapter{
 			} else {
 				sakiCheck.lastChannelMessage=System.currentTimeMillis();
 			}
+			
+			//if (ev.getMessage().) //TODO Colors.
 		}
 		
 		if (ValidMessage(ev.getAuthor(),ev.getChannel(),ev.getMessage().getContentDisplay())) {
