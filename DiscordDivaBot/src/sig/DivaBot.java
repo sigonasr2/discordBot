@@ -42,6 +42,7 @@ public class DivaBot extends ListenerAdapter{
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent ev) {
+		System.out.println(ev.getAuthor().getName()+"["+ev.getChannel().getName()+"]:"+ev.getMessage().getContentStripped());
 		/*System.out.println(ev.getAuthor().getName());
 		System.out.println(ev.getMessage().getContentDisplay());
 		System.out.println(ev.getChannel().getName());*/
