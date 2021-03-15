@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.security.auth.login.LoginException;
 
@@ -55,8 +56,9 @@ public class DivaBot extends ListenerAdapter{
 				lastMessage=ev.getMessage().getContentDisplay();
 			}
 			if (lastMessageCount==2) {
+				ev.getChannel().sendTyping();
 				ev.getChannel().sendMessage(ev.getMessage())
-				.queue();
+				.queueAfter(650+(10*lastMessage.length()),TimeUnit.MILLISECONDS);
 			}
 		}
 		
