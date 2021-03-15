@@ -56,7 +56,7 @@ public class DivaBot extends ListenerAdapter{
 				lastMessage=ev.getMessage().getContentDisplay();
 			}
 			if (lastMessageCount==2) {
-				ev.getChannel().sendTyping();
+				ev.getChannel().sendTyping().queue();
 				ev.getChannel().sendMessage(ev.getMessage())
 				.queueAfter(650+(10*lastMessage.length()),TimeUnit.MILLISECONDS);
 			}
