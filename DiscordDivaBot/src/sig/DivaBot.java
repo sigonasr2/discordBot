@@ -49,6 +49,7 @@ public class DivaBot extends ListenerAdapter{
 		//System.out.println(ev.getAuthor().getIdLong());
 		
 		if (ApprovedChannel(ev.getChannel(),ev.getAuthor())/*&&ev.getMessage().getContentDisplay().toLowerCase().contains("muni")*/) {
+			
 			if (lastMessageCount>0&&ev.getMessage().getContentDisplay().toLowerCase().equalsIgnoreCase(lastMessage)) {
 				lastMessageCount++;
 			} else {
@@ -59,6 +60,9 @@ public class DivaBot extends ListenerAdapter{
 				ev.getChannel().sendTyping().queue();
 				ev.getChannel().sendMessage(ev.getMessage())
 				.queueAfter(650+(10*lastMessage.length()),TimeUnit.MILLISECONDS);
+			} else 
+			if (Math.random()<=1/32f) { //1 in 32 chance muni starts typing away...
+				ev.getChannel().sendTyping().queue();
 			}
 		}
 		
@@ -103,7 +107,8 @@ public class DivaBot extends ListenerAdapter{
 						(message.toLowerCase().contains("muni")&&message.toLowerCase().contains("awesome"))||
 						message.toLowerCase().contains("muni")||
 						message.toLowerCase().contains("むに")||
-						message.toLowerCase().contains("무니")));
+						message.toLowerCase().contains("무니")||
+						(message.toLowerCase().contains("vj")||message.toLowerCase().contains("visual"))));
 	}
 
 	private boolean ApprovedChannel(MessageChannel channel,User author) {
