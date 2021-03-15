@@ -70,9 +70,15 @@ public class DivaBot extends ListenerAdapter{
 			/*ev.getChannel().sendMessage(ev.getAuthor().getName()+" typed '"+ev.getMessage().getContentDisplay()+"'!")
 			.queue();*/
 			//System.out.println(bot.getEmotes());
-			ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().hashCode()+
-					ev.getAuthor().getIdLong()))
-			.queue();
+			if (ev.getMessage().getContentDisplay().toLowerCase().contains("nyoc") ) {
+				ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomNyochioEmote(ev.getMessage().getContentDisplay().hashCode()+
+						ev.getAuthor().getIdLong()))
+				.queue();
+			} else {
+				ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().hashCode()+
+						ev.getAuthor().getIdLong()))
+				.queue();
+			}
 			//messageHistory.put(ev.getMessageIdLong(),ev.getMessage());
 		}
 	}
@@ -82,6 +88,18 @@ public class DivaBot extends ListenerAdapter{
 		List<Emote> muniEmotes = new ArrayList<Emote>();
 		for (Emote e : emotes) {
 			if (e.getName().toLowerCase().contains("muni")) {
+				muniEmotes.add(e);
+			}
+		}
+		Random r = new Random(seed);
+		return muniEmotes.get((int)(r.nextDouble()*muniEmotes.size()));
+	}
+	
+	private Emote ChooseRandomNyochioEmote(long seed) {
+		List<Emote> emotes = bot.getEmotes();
+		List<Emote> muniEmotes = new ArrayList<Emote>();
+		for (Emote e : emotes) {
+			if (e.getName().toLowerCase().contains("nyochio")) {
 				muniEmotes.add(e);
 			}
 		}
@@ -108,6 +126,7 @@ public class DivaBot extends ListenerAdapter{
 						message.toLowerCase().contains("muni")||
 						message.toLowerCase().contains("むに")||
 						message.toLowerCase().contains("무니")||
+						message.toLowerCase().contains("nyoc")||
 						(message.toLowerCase().contains("vj")||message.toLowerCase().contains("visual"))));
 	}
 
