@@ -77,6 +77,7 @@ public class DivaBot extends ListenerAdapter{
 			if (sakiCheck.dead) {
 				//React to next message.
 				sakiCheck.dead=false;
+				sakiCheck.lastChannelMessage=System.currentTimeMillis();
 				React(ev);
 			} else {
 				sakiCheck.lastChannelMessage=System.currentTimeMillis();
