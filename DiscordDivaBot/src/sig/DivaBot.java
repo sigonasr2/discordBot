@@ -31,7 +31,7 @@ public class DivaBot extends ListenerAdapter{
 	public int lastMessageCount = 0;
 	public String lastMessage = "";
 	public String[] keywordsList= new String[]{
-			"Makka","Apple","Apricot","Avocado","Banana","Bilberry","Blackberry","Blueberry","Currant","Cherry","Cherimoya","Clementine","Date","Damson","Fruit","Durian","Eggplant","Elderberry","Feijoa","Gooseberry","Grape","Grapefruit","Guava","Huckleberry","Jackfruit","Jambul","Kiwi","Kumquat","Legume","Lemon","Lime","Lychee","Mango","Mangostine","Melon","Cantaloupe","Cantalope","Honeydew","Watermelon","Rock","Nectarine","Orange","Peach","Pear","Williams","Bartlett","Pitaya","Physalis","Plum","prune","Pineapple","Pomegranate","Pomegranite","Raisin","Raspberry","blackcap","Rambutan","Redcurrant","Salal","Satsuma","Star","Strawberry","Tangerine","Tomato","Ugli","Watermelon","Ziziphus","mauritiana","Red","Orange","Yellow","Green","Blue","Purple","Pink","Brown","Gray","Grey","Black","White","Color","Dragon","Wyvern","Quetzalcoatl","Hydra","Cockatrice","Wyrm","Drake"
+			"alduin","Universe","Galaxy","Brain","Makka","Apple","Apricot","Avocado","Banana","Bilberry","Blackberry","Blueberry","Currant","Cherry","Cherimoya","Clementine","Date","Damson","Fruit","Durian","Eggplant","Elderberry","Feijoa","Gooseberry","Grape","Grapefruit","Guava","Huckleberry","Jackfruit","Jambul","Kiwi","Kumquat","Legume","Lemon","Lime","Lychee","Mango","Mangostine","Melon","Cantaloupe","Cantalope","Honeydew","Watermelon","Rock","Nectarine","Orange","Peach","Pear","Williams","Bartlett","Pitaya","Physalis","Plum","prune","Pineapple","Pomegranate","Pomegranite","Raisin","Raspberry","blackcap","Rambutan","Redcurrant","Salal","Satsuma","Star","Strawberry","Tangerine","Tomato","Ugli","Watermelon","Ziziphus","mauritiana","Red","Orange","Yellow","Green","Blue","Purple","Pink","Brown","Gray","Grey","Black","White","Color","Dragon","Wyvern","Quetzalcoatl","Hydra","Cockatrice","Wyrm","Drake"
 		};
 	static Timer t;
 	static Check sakiCheck;
@@ -95,6 +95,7 @@ public class DivaBot extends ListenerAdapter{
 		ev.getChannel().addReactionById(ev.getMessageIdLong(), ChooseRandomMuniEmote(ev.getMessage().getContentDisplay().hashCode()+
 				ev.getAuthor().getIdLong()))
 		.queue();
+		sakiCheck.lastChannelMessage=System.currentTimeMillis();
 	}
 	
 	private Emote ChooseRandomMuniEmote(long seed) {
