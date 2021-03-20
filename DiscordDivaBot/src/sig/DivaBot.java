@@ -100,7 +100,7 @@ public class DivaBot extends ListenerAdapter{
 		List<Emote> emotes = bot.getEmotes();
 		List<Emote> muniEmotes = new ArrayList<Emote>();
 		for (Emote e : emotes) {
-			if (e.getName().toLowerCase().contains("nyochio")) {
+			if (e.getName().toLowerCase().contains("nyochio")&&!e.isAnimated()) {
 				muniEmotes.add(e);
 			}
 		}
