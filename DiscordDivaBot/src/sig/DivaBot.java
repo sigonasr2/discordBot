@@ -105,7 +105,9 @@ public class DivaBot extends ListenerAdapter{
 		for (Emote e : emotes) {
 			if (e.getName().toLowerCase().contains("saki")&&
 					!e.getName().toLowerCase().contains("dead1")&&
-					!e.getName().toLowerCase().contains("dead2")) {
+					!e.getName().toLowerCase().contains("dead2")&&
+					!e.getName().toLowerCase().contains("ded1")&&
+					!e.getName().toLowerCase().contains("ded2")) {
 				muniEmotes.add(e);
 			}
 		}
